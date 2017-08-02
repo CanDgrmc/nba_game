@@ -17,6 +17,7 @@ class CreateMatchesTable extends Migration
             $table->increments('id');
             $table->integer('first_team');
             $table->integer('second_team');
+            $table->integer('session');
             $table->timestamps();
         });
     }
