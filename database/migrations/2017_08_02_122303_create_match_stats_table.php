@@ -16,7 +16,9 @@ class CreateMatchStatsTable extends Migration
         Schema::create('match_stats', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('match_id');
-            $table->integer('quarter_id');
+            $table->integer('quarter_number');
+            $table->integer('point');
+
         });
     }
 
