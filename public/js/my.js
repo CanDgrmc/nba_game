@@ -2,15 +2,17 @@
  * Created by Asus on 2.08.2017.
  */
 var clickControl=0;
+var time=0;
+
 $(document).ready(function(){
+
     prepareMatches()
 
 
-
-    var time=0;
     var total_time=48;
     $('#startBtn').click(function(e){
         e.preventDefault()
+
 
         if(clickControl===0){
             clickControl++;
@@ -19,6 +21,7 @@ $(document).ready(function(){
                     if(time<total_time){
                     time++
                     $('#minute').text(time)
+                        attack();
 
 
                     }
@@ -26,20 +29,19 @@ $(document).ready(function(){
                         clickControl=0
                         clearInterval(timer)
                     }
-                },500)
+                },5000)
 
         }
     })
 
-    $('#startBtn').click(function(){
-        attack();
-    })
+
 
 
 })
 
 
 function prepareMatches(){
+
     var token = $('input[name="_token"  ]').val()
     var statu=0;
 
@@ -69,13 +71,30 @@ function prepareMatches(){
 
 function attack(){
     var token = $('input[name="_token"  ]').val()
-    $.post('/attack',{
-        '_token':token,
-        'team_1': 1,
-        'team_2': 2
-    },function(res){
-        console.log(res.team + ':' + res.score)
-    })
+    var team1=$('.team_1')
+    var team2=$('.team_2')
+    for(var i=0; i<team1.length;i++){
+        $.post('/attack',{
+            '_token' : token,
+            'team_1' : team1[i].getAttribute('team'),
+            'team_2' : team2[i].getAttribute('team')
+        },function(res){
+
+            if(res.score==='scored'){
+                var score
+                if(time<=15){
+                    score =$('#'+res.attacker).children('.first_period').html();
+                    if(score==='-'){
+                        $('#'+res.attacker).children('.first_period').html('3')
+                    }
+                }
+            }
+        })
+
+
+    }
+
+
 }
 
 $('tr').click(function(){

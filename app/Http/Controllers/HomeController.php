@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Match_stat;
+use App\Player;
 use Illuminate\Http\Request;
 use App\Team;
 use App\Match;
@@ -48,6 +50,12 @@ class HomeController extends Controller
         $attack_turn=array();
         $team1=Team::find($req->team_1);
         $team2=Team::find($req->team_2);
+        $team1_players=$team1->getPlayerIds();
+        $team2_players=$team2->getPlayerIds();
+        $team1_player=Player::find(array_random($team1_players->toArray()));
+        $team2_player=Player::find(array_random($team2_players->toArray()));
+
+
 
         $team1_attack=$team1->team_attack_overall;
         $team2_attack=$team2->team_attack_overall;
@@ -67,36 +75,70 @@ class HomeController extends Controller
 
         switch ($turn){
             case 'team_1':
-                $result['team']=1;
+                $result=[
+                    'attacker' => $team1->id,
+                    'defender' => $team2->id,
+                    'attack_player' => [
+                        'id' =>$team1_player->id,
+                        'name' =>$team1_player->name_surname,
+                    ],
+                    'defence_player' => [
+                        'id' =>$team2_player->id,
+                        'name' =>$team2_player->name_surname,
+                    ],
+
+                ];
+
+
+
                 $scored=$team1->Score($team2);
                 if($scored){
                     $result['score'] = 'scored';
+                }else{
+                    $result['score'] = 'failed';
                 }
-                $result['score'] = 'failed';
+
                 return $result;
                 break;
 
             case 'team_2':
-                $result['team']=2;
+                $result=[
+                    'attacker' => $team2->id,
+                    'defender' => $team1->id,
+                    'attack_player' => [
+                        'id' =>$team1_player->id,
+                        'name' =>$team1_player->name_surname,
+                    ],
+                    'defence_player' => [
+                        'id' =>$team2_player->id,
+                        'name' =>$team2_player->name_surname,
+                    ],
+
+                ];
                 $scored=$team2->Score($team1);
                 if($scored){
-
                     $result['score'] = 'scored';
+                }else{
+                    $result['score'] = 'failed';
                 }
-                $result['score'] = 'failed';
+
                 return $result;
 
                 break;
         }
-
     }
 
+    public function match_stats(Request $req){
 
+        $match=new Match_stat();
+        $match->id=$req->match_id;
+        $match->quarter=$req->quarter;
+        $match->team1_point=$req->team1_point;
+        $match->team2_point=$req->team2_point;
+        $match->team1_attack=$req->team1_attack;
+        $match->team2_attack=$req->team2_attack;
+        $match->save();
 
-
-
-
-
-
+    }
 
 }

@@ -30,25 +30,25 @@
                             </thead>
                             <tbody>
 
-                            <tr class="team_1" team="{{$teams[$i]->id}}" data="{{$teams[$i]->team_shortName}}">
+                            <tr class="team_1" team="{{$teams[$i]->id}}" data="{{$teams[$i]->team_shortName}}" id="{{$teams[$i]->id}}">
                                 <td>
                                     <img src="{{asset($teams[$i]->team_img)}}" height="70" width="90">
                                     <strong class="team_name">{{$teams[$i]->team_shortName}}</strong>
                                 </td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
+                                <td class="first_period">-</td>
+                                <td class="second_period">-</td>
+                                <td class="third_period">-</td>
+                                <td class="forth_period">-</td>
 
                             </tr>
-                            <tr class="team_2" team="{{$teams[$i+1]->id}}" data="{{$teams[$i]->team_shortName}}">
+                            <tr class="team_2" team="{{$teams[$i+1]->id}}" data="{{$teams[$i+1]->team_shortName}}" id="{{$teams[$i+1]->id}}">
                                 <td><img src="{{asset($teams[$i+1]->team_img)}}" height="70" width="90">
                                     <strong class="team_name">{{$teams[$i+1]->team_shortName}}</strong>
                                 </td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
+                                <td class="first_period">-</td>
+                                <td class="second_period">-</td>
+                                <td class="third_period">-</td>
+                                <td class="forth_period">-</td>
 
                             </tr>
 

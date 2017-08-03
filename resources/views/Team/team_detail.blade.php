@@ -16,7 +16,7 @@
             <ul>
                 @foreach($team->Players()->pluck('name_surname','id') as $id => $player)
 
-                    <li><img src="{{asset('images/player_default.png')}}" alt=""><a href="{{url('player_detail/'.$id)}}">{{$player}}</a></li>
+                    <li class="player"><img src="{{asset('images/player_default.png')}}" alt=""><a href="{{url('player_detail/'.$id)}}">{{$player}}</a></li>
 
                 @endforeach
             </ul>

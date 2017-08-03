@@ -14,6 +14,14 @@ class Team extends Model
         return $this->hasMany('App\\Player');
     }
 
+    public function getPlayerIds(){
+        return $this->Players()->pluck('id');
+    }
+    public function getPlayerNames(){
+        return $this->Players()->pluck('name_surname');
+    }
+
+
     public function Score(Team $team){
         $score=array();
         $attack=$this->team_attack_overall;

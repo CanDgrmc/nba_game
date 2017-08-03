@@ -17,7 +17,10 @@ class CreateMatchStatsTable extends Migration
             $table->increments('id');
             $table->integer('match_id');
             $table->integer('quarter_number');
-            $table->integer('point');
+            $table->integer('team1_point');
+            $table->integer('team2_point');
+            $table->integer('team1_attack');
+            $table->integer('team2_attack');
 
         });
     }

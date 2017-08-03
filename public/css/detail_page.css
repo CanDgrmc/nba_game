@@ -24,9 +24,11 @@ body{
 }
 .dropdown-menu li a{
     color:#fff !important;
+
 }
 .dropdown-menu li a:hover{
     background-color:rgba(75, 72, 77, 0.3) !important; ;
+
 }
 .dropdown-menu {
     background-color:rgba(75, 72, 77, 0.3) !important; ;
@@ -41,6 +43,7 @@ h4 {
     font-weight: bold;
     color:silver;
     text-shadow: 0 0 2px white;
+    font-size:24px;
 }
 h5  {
     border-bottom:1px solid silver;
@@ -56,10 +59,16 @@ h5  {
     margin-top:20px;
 }
 
-li {
+.player {
     list-style: none;
     display: inline-block;
     margin:20px;
+    padding: 10px;
+
+}
+.player:hover {
+    background-color: rgba(192, 192, 192, 0.23);
+
 }
 a{
     color:#fff;
