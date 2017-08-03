@@ -26,6 +26,12 @@ $(document).ready(function(){
 
         }
     })
+
+    $('#startBtn').click(function(){
+        attack();
+    })
+
+
 })
 
 
@@ -55,4 +61,15 @@ function prepareMatches(){
 
     }
 
+}
+
+function attack(){
+    var token = $('input[name="_token"  ]').val()
+    $.post('/attack',{
+        '_token':token,
+        'team_1': 1,
+        'team_2': 2
+    },function(res){
+        console.log(res)
+    })
 }

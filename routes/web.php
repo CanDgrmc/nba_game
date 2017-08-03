@@ -19,3 +19,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/setMatches','HomeController@setMatches');
+
+Route::post('/attack','HomeController@attack');

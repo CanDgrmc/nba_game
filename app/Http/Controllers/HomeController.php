@@ -45,18 +45,28 @@ class HomeController extends Controller
     }
 
     public function attack(Request $req){
-        $score=array();
-        $team1=Team::find($req->team1);
-        $team2=Team::find($req->team2);
+        $attack_turn=array();
+        $team1=Team::find($req->team_1);
+        $team2=Team::find($req->team_2);
         $overall_total=$team1->team_overall+$team2->team_overall;
         $team1_per=round($team1->team_overall/$overall_total*100);
         $team2_per=round($team2->team_overall/$overall_total*100);
         for ($i=0;$i<$team1_per;$i++){
-            array_push($score,'team_1');
+            array_push($attack_turn,'team_1');
         }
         for ($i=0;$i<$team2_per;$i++){
-            array_push($score,'team_2');
+            array_push($attack_turn,'team_2');
         }
+
+        $on_attack=array_random($attack_turn);
+        switch ($on_attack){
+            case 'team_1':
+                
+                break;
+            case 'team_2':
+                break;
+        }
+
 
 
     }
