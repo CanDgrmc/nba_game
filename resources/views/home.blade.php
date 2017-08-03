@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-
+    <link rel="stylesheet" href="{{asset('css/main.css')}}">
 
 @endsection
 
@@ -30,7 +30,7 @@
                             </thead>
                             <tbody>
 
-                            <tr class="team_1" team="{{$teams[$i]->id}}">
+                            <tr class="team_1" team="{{$teams[$i]->id}}" data="{{$teams[$i]->team_shortName}}">
                                 <td>
                                     <img src="{{asset($teams[$i]->team_img)}}" height="70" width="90">
                                     <strong class="team_name">{{$teams[$i]->team_shortName}}</strong>
@@ -41,7 +41,7 @@
                                 <td>-</td>
 
                             </tr>
-                            <tr class="team_2" team="{{$teams[$i+1]->id}}">
+                            <tr class="team_2" team="{{$teams[$i+1]->id}}" data="{{$teams[$i]->team_shortName}}">
                                 <td><img src="{{asset($teams[$i+1]->team_img)}}" height="70" width="90">
                                     <strong class="team_name">{{$teams[$i+1]->team_shortName}}</strong>
                                 </td>

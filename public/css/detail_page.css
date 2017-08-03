@@ -1,0 +1,73 @@
+body{
+    background-image: url('../images/detail_background.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    height: auto;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
+}
+
+.navbar-brand{
+    font-weight: bold;
+    padding:5px;
+    font-family: "Agency FB";
+    font-size:25px;
+}
+.dropdown-toggle{
+    color:#fff;
+    border-radius: 5px;
+}
+.dropdown-toggle:hover{
+    background-color: rgba(75, 72, 77, 0.3) !important;
+    color:#fff !important;
+}
+.dropdown-menu li a{
+    color:#fff !important;
+}
+.dropdown-menu li a:hover{
+    background-color:rgba(75, 72, 77, 0.3) !important; ;
+}
+.dropdown-menu {
+    background-color:rgba(75, 72, 77, 0.3) !important; ;
+}
+.detail_box{
+    min-height: 500px;
+    background-color:rgba(29, 29, 29, 0.36);
+    box-shadow: 5px 0 10px rgba(255, 255, 255, 0.35);
+    border-radius: 10px;
+}
+h4 {
+    font-weight: bold;
+    color:silver;
+    text-shadow: 0 0 2px white;
+}
+h5  {
+    border-bottom:1px solid silver;
+    color:#FFF;
+    text-align: center;
+    text-shadow: 0 0 2px white;
+    padding: 10px;
+}
+.players_div{
+    margin-top:15px
+}
+.matches_div{
+    margin-top:20px;
+}
+
+li {
+    list-style: none;
+    display: inline-block;
+    margin:20px;
+}
+a{
+    color:#fff;
+}
+a:hover {
+    text-decoration: none;
+    color:silver
+}
+th{
+    color:#fff
+}

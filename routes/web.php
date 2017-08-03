@@ -18,6 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/team_detail/{short}','TeamController@detail');
 Route::post('/setMatches','HomeController@setMatches');
-
 Route::post('/attack','HomeController@attack');

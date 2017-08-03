@@ -1,12 +1,12 @@
 /**
  * Created by Asus on 2.08.2017.
  */
-
+var clickControl=0;
 $(document).ready(function(){
     prepareMatches()
 
 
-    var clickControl=0;
+
     var time=0;
     var total_time=48;
     $('#startBtn').click(function(e){
@@ -15,12 +15,16 @@ $(document).ready(function(){
         if(clickControl===0){
             clickControl++;
 
-                setInterval(function(){
+                var timer=setInterval(function(){
                     if(time<total_time){
                     time++
                     $('#minute').text(time)
 
 
+                    }
+                    else if(time===48){
+                        clickControl=0
+                        clearInterval(timer)
                     }
                 },500)
 
@@ -73,3 +77,10 @@ function attack(){
         console.log(res.team + ':' + res.score)
     })
 }
+
+$('tr').click(function(){
+    if(clickControl===0){
+        var short=$(this).attr('data')
+        window.location.href='team_detail/'+short
+    }
+})
