@@ -67,13 +67,25 @@ class HomeController extends Controller
 
         switch ($turn){
             case 'team_1':
-                $result=$team1->Score($team2);
+                $result['team']=1;
+                $scored=$team1->Score($team2);
+                if($scored){
+                    $result['score'] = 'scored';
+                }
+                $result['score'] = 'failed';
                 return $result;
                 break;
 
             case 'team_2':
-                $result=$team2->Score($team1);
+                $result['team']=2;
+                $scored=$team2->Score($team1);
+                if($scored){
+
+                    $result['score'] = 'scored';
+                }
+                $result['score'] = 'failed';
                 return $result;
+
                 break;
         }
 

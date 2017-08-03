@@ -14,17 +14,18 @@ class CreatePlayersTable extends Migration
     public function up()
     {
         Schema::create('players', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->increments('id');
-            $table->unsignedInteger('team_id')->nullable();
-
+            $table->integer('team_id')->unsigned();
             $table->string('name_surname');
+            $table->integer('number');
             $table->string('position');
             $table->integer('height');
             $table->integer('weight');
             $table->timestamps();
         });
-        Schema::table('players', function($table) {
-            $table->foreign('team_id')->references('id')->on('users');
+        Schema::table('players', function(Blueprint $table) {
+            $table->foreign('team_id')->references('id')->on('teams');
         });
     }
 

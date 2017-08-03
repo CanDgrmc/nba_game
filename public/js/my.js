@@ -70,6 +70,6 @@ function attack(){
         'team_1': 1,
         'team_2': 2
     },function(res){
-        console.log(res)
+        console.log(res.team + ':' + res.score)
     })
 }
