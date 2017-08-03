@@ -63,20 +63,23 @@ class HomeController extends Controller
             array_push($attack_turn,'team_2');
         }
 
-        $on_attack=array_random($attack_turn);
-        switch ($on_attack){
+        $turn=array_random($attack_turn);
+
+        switch ($turn){
             case 'team_1':
-                $attack=$team1->team_attack_overall;
-                $defence=$team2->team_defence_overall;
-                $total=$attack+$defence;
+                $result=$team1->Score($team2);
+                return $result;
                 break;
+
             case 'team_2':
+                $result=$team2->Score($team1);
+                return $result;
                 break;
         }
 
-
-
     }
+
+
 
 
 
