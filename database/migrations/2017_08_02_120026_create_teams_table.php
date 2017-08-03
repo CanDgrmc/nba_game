@@ -18,7 +18,8 @@ class CreateTeamsTable extends Migration
             $table->string('team_img');
             $table->string('team_name');
             $table->string('team_shortName');
-            $table->integer('team_overall');
+            $table->integer('team_attack_overall');
+            $table->integer('team_defence_overall');
         });
     }
 

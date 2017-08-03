@@ -48,9 +48,14 @@ class HomeController extends Controller
         $attack_turn=array();
         $team1=Team::find($req->team_1);
         $team2=Team::find($req->team_2);
-        $overall_total=$team1->team_overall+$team2->team_overall;
-        $team1_per=round($team1->team_overall/$overall_total*100);
-        $team2_per=round($team2->team_overall/$overall_total*100);
+
+        $team1_attack=$team1->team_attack_overall;
+        $team2_attack=$team2->team_attack_overall;
+
+        $total=$team1_attack+$team2_attack;
+
+        $team1_per=round($team1_attack/$total*100);
+        $team2_per=round($team2_attack/$total*100);
         for ($i=0;$i<$team1_per;$i++){
             array_push($attack_turn,'team_1');
         }
@@ -61,7 +66,9 @@ class HomeController extends Controller
         $on_attack=array_random($attack_turn);
         switch ($on_attack){
             case 'team_1':
-                
+                $attack=$team1->team_attack_overall;
+                $defence=$team2->team_defence_overall;
+                $total=$attack+$defence;
                 break;
             case 'team_2':
                 break;
