@@ -19,6 +19,7 @@ class CreateSkillsTable extends Migration
             $table->integer('point_3');
             $table->integer('point_2');
             $table->integer('dunk');
+            $table->integer('defence');
         });
         Schema::table('skills', function($table) {
             $table->foreign('player_id')->references('id')->on('players');

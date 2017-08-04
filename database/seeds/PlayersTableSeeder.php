@@ -268,7 +268,7 @@ class PlayersTableSeeder extends Seeder
             ],
             [
                 'team_id' =>App\Team::where('team_shortName','DAL')->first()->id,
-                'name_surname' => 'Edy Tavares',
+                'name_surname' => 'Edy Tavaress',
                 'number' => 3,
                 'position' => 'C',
                 'height' => 211,

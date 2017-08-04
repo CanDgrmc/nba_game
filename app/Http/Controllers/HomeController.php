@@ -26,7 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $teams=Team::limit(8)->get();
+        $teams=Team::inRandomOrder()->limit(8)->get();
         $match=Match::count()+1;
 
         return view('home')->with('teams',$teams)->with('match',$match);
@@ -48,15 +48,21 @@ class HomeController extends Controller
 
     public function attack(Request $req){
         $attack_turn=array();
+
         $team1=Team::find($req->team_1);
         $team2=Team::find($req->team_2);
+
+
+
+        ## Random Players
         $team1_players=$team1->getPlayerIds();
         $team2_players=$team2->getPlayerIds();
         $team1_player=Player::find(array_random($team1_players->toArray()));
         $team2_player=Player::find(array_random($team2_players->toArray()));
+        ##
 
 
-
+        ## Team Score Possibility by Overall Points
         $team1_attack=$team1->team_attack_overall;
         $team2_attack=$team2->team_attack_overall;
 
@@ -64,6 +70,10 @@ class HomeController extends Controller
 
         $team1_per=round($team1_attack/$total*100);
         $team2_per=round($team2_attack/$total*100);
+        ##
+
+        ## Attack Turn
+
         for ($i=0;$i<$team1_per;$i++){
             array_push($attack_turn,'team_1');
         }
@@ -72,28 +82,37 @@ class HomeController extends Controller
         }
 
         $turn=array_random($attack_turn);
+        ##
+
+        ## Types   1 = Dunk   2= 2points   3=3points
+        $type=array_random([1,2,3]);
+
+
+        ##
 
         switch ($turn){
+
+            ## Set Return Data
             case 'team_1':
+                $scored=$team1->Score($team2,$type);
+
                 $result=[
                     'attacker' => $team1->id,
                     'defender' => $team2->id,
                     'attack_player' => [
-                        'id' =>$team1_player->id,
-                        'name' =>$team1_player->name_surname,
+                        'id' =>$scored['attacker']->id,
+                        'name' =>$scored['attacker']->name_surname,
                     ],
                     'defence_player' => [
-                        'id' =>$team2_player->id,
-                        'name' =>$team2_player->name_surname,
+                        'id' =>$scored['defender']->id,
+                        'name' =>$scored['defender']->name_surname,
                     ],
+                    'type' => $type
 
                 ];
-
-
-
-                $scored=$team1->Score($team2);
                 if($scored){
                     $result['score'] = 'scored';
+
                 }else{
                     $result['score'] = 'failed';
                 }
@@ -102,22 +121,23 @@ class HomeController extends Controller
                 break;
 
             case 'team_2':
+
+                $scored=$team2->Score($team1,$type);
                 $result=[
                     'attacker' => $team2->id,
                     'defender' => $team1->id,
                     'attack_player' => [
-                        'id' =>$team1_player->id,
-                        'name' =>$team1_player->name_surname,
+                        'id' =>$scored['attacker']->id,
+                        'name' =>$scored['attacker']->name_surname,
                     ],
                     'defence_player' => [
-                        'id' =>$team2_player->id,
-                        'name' =>$team2_player->name_surname,
+                        'id' =>$scored['defender']->id,
+                        'name' =>$scored['defender']->name_surname,
                     ],
-
                 ];
-                $scored=$team2->Score($team1);
-                if($scored){
+                if($scored['result']){
                     $result['score'] = 'scored';
+
                 }else{
                     $result['score'] = 'failed';
                 }
@@ -128,7 +148,7 @@ class HomeController extends Controller
         }
     }
 
-    public function match_stats(Request $req){
+    public function match_result(Request $req){
 
         $match=new Match_stat();
         $match->id=$req->match_id;

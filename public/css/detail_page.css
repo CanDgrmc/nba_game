@@ -62,8 +62,8 @@ h5  {
 .player {
     list-style: none;
     display: inline-block;
-    margin:20px;
-    padding: 10px;
+
+    padding: 5px;
 
 }
 .player:hover {

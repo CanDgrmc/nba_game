@@ -15,9 +15,9 @@ class CreateLogsTable extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('match_id');
-            $table->integer('attacker_id');
-            $table->integer('defender_id');
+            $table->integer('match_id')->unsigned();
+            $table->integer('attacker_id')->unsigned();
+            $table->integer('defender_id')->unsigned();
             $table->integer('status');
             $table->string('message');
         });

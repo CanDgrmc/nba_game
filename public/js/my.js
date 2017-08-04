@@ -51,6 +51,8 @@ function prepareMatches(){
         var team_1=$('#'+match_id).find('.team_1').attr('team')
         var team_2=$('#'+match_id).find('.team_2').attr('team')
 
+        console.log(team_1 + ' against '+team_2)
+
         $.post('/setMatches',{
             'first_team' : team_1,
             'second_team' : team_2,
@@ -82,10 +84,45 @@ function attack(){
 
             if(res.score==='scored'){
                 var score
-                if(time<=15){
+                if(time<=12){
                     score =$('#'+res.attacker).children('.first_period').html();
                     if(score==='-'){
                         $('#'+res.attacker).children('.first_period').html('3')
+                    }
+                    else{
+                        var point=$('#'+res.attacker).children('.first_period').html()
+                        point=parseInt(point)
+                        $('#'+res.attacker).children('.first_period').html(point+3)
+                    }
+                }
+                else if(time<=24 && time>12){
+                    score =$('#'+res.attacker).children('.second_period').html();
+                    if(score==='-'){
+                        $('#'+res.attacker).children('.second_period').html('3')
+                    }else{
+                        var point=$('#'+res.attacker).children('.second_period').html()
+                        point=parseInt(point)
+                        $('#'+res.attacker).children('.second_period').html(point+3)
+                    }
+                }
+                else if(time<=36 && time>24){
+                    score =$('#'+res.attacker).children('.third_period').html();
+                    if(score==='-'){
+                        $('#'+res.attacker).children('.third_period').html('3')
+                    }else{
+                        var point=$('#'+res.attacker).children('.third_period').html()
+                        point=parseInt(point)
+                        $('#'+res.attacker).children('.third_period').html(point+3)
+                    }
+                }
+                else if(time<=48 && time>36){
+                    score =$('#'+res.attacker).children('.forth_period').html();
+                    if(score==='-'){
+                        $('#'+res.attacker).children('.forth_period').html('3')
+                    }else{
+                        var point=$('#'+res.attacker).children('.forth_period').html()
+                        point=parseInt(point)
+                        $('#'+res.attacker).children('.forth_period').html(point+3)
                     }
                 }
             }
