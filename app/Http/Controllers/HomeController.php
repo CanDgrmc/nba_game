@@ -100,7 +100,9 @@ class HomeController extends Controller
 
                 $result=[
                     'attacker' => $team1->id,
+                    'attacker_shortName' =>$team1->team_shortName,
                     'defender' => $team2->id,
+                    'defender_shortName' => $team2->team_shortName,
                     'attack_player' => [
                         'id' =>$scored['attacker']->id,
                         'name' =>$scored['attacker']->name_surname,
@@ -127,7 +129,9 @@ class HomeController extends Controller
                 $scored=$team2->Score($team1,$type);
                 $result=[
                     'attacker' => $team2->id,
+                    'attacker_shortName' =>$team2->team_shortName,
                     'defender' => $team1->id,
+                    'defender_shortName' => $team1->team_shortName,
                     'attack_player' => [
                         'id' =>$scored['attacker']->id,
                         'name' =>$scored['attacker']->name_surname,
@@ -172,12 +176,21 @@ class HomeController extends Controller
 
 
     public function saveLog(Request $req){
+        $attacker=Player::find($req->attacker_id);
+        $defender=Player::find($req->defender_id);
+        if($req->type===1){
+            $type='Dunk';
+        }else if($req->type===2){
+            $type='2 Points';
+        }else{
+            $type='3 Points';
+        }
         switch ($req->status){
             case 'scored':
-                $message='success';
+                $message= $attacker->name_surname.' has scored '.$type;
                 break;
             case 'failed':
-                $message='fail';
+                $message= $attacker->name_surname.' was blocked by '.$defender->name_surname;
                 break;
         }
         $log=new Log();

@@ -23,7 +23,7 @@ class PlayersTableSeeder extends Seeder
             ],
             [
                 'team_id' =>App\Team::where('team_shortName','BST')->first()->id,
-                'name_surname' => ',Jabari Birt',
+                'name_surname' => 'Jabari Birt',
                 'number' => 26,
                 'position' => 'G',
                 'height' => 198,
@@ -112,7 +112,7 @@ class PlayersTableSeeder extends Seeder
             ],
             [
                 'team_id' =>App\Team::where('team_shortName','MIN')->first()->id,
-                'name_surname' => ',Nemanja Bjelica',
+                'name_surname' => 'Nemanja Bjelica',
                 'number' => 88,
                 'position' => 'F',
                 'height' => 208,

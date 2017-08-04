@@ -93,6 +93,7 @@ function attack(){
             saveLogs(log)
 
             if(res.score==='scored'){
+
                 var point;
 
                 var score;
@@ -104,6 +105,7 @@ function attack(){
                 }else{
                     score_point=res.type
                 }
+                $('#'+res.attacker).parents('table').next('ul').find('.action').html('<span style="color:#deff31">'+res.attack_player.name+'('+ res.attacker_shortName +')</span> has scored '+score_point+' points')
 
 
 
@@ -148,6 +150,9 @@ function attack(){
                         $('#'+res.attacker).children('.forth_period').html(point + score_point)
                     }
                 }
+            }
+            else{
+                $('#'+res.attacker).parents('table').next('ul').find('.action').html('<span style="color:#deff31">'+res.attack_player.name+'('+ res.attacker_shortName+')</span> was blocked by <span style="color:#deff31">'+res.defence_player.name+ '('+ res.defender_shortName +')</span>')
             }
         })
 
