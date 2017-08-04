@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User_stat extends Model
+class player_stat extends Model
 {
     //
 }

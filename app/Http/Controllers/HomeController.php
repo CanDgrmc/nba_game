@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Log;
 use App\Match_stat;
 use App\Player;
+use App\player_stat;
 use Illuminate\Http\Request;
 use App\Team;
 use App\Match;
@@ -134,6 +136,7 @@ class HomeController extends Controller
                         'id' =>$scored['defender']->id,
                         'name' =>$scored['defender']->name_surname,
                     ],
+                    'type' => $type
                 ];
                 if($scored['result']){
                     $result['score'] = 'scored';
@@ -159,6 +162,42 @@ class HomeController extends Controller
         $match->team2_attack=$req->team2_attack;
         $match->save();
 
+    }
+
+    public function player_stats(Request $req){
+        $stats=new player_stat();
+        $stats->match_id=$req->match_id;
+        $stats->player_id=$req->player_id;
+    }
+
+
+    public function saveLog(Request $req){
+        switch ($req->status){
+            case 'scored':
+                $message='success';
+                break;
+            case 'failed':
+                $message='fail';
+                break;
+        }
+        $log=new Log();
+        $log->match_id = $req->match_id;
+        $log->attacker_id = $req->attacker_id;
+        $log->defender_id = $req->defender_id;
+        $log->status=$req->status;
+        $log->type=$req->type;
+        $log->message=$message;
+        $log->time=$req->time;
+
+        if($log->save()){
+            return 1;
+        }
+
+    }
+
+    public function getLog(Request $req){
+        $log = Log::find($req->log_id);
+        return $log;
     }
 
 }

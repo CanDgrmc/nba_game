@@ -1,17 +1,18 @@
 /**
  * Created by Asus on 2.08.2017.
  */
+
+
 var clickControl=0;
 var time=0;
 
+
 $(document).ready(function(){
-
     prepareMatches()
-
-
     var total_time=48;
     $('#startBtn').click(function(e){
         e.preventDefault()
+
 
 
         if(clickControl===0){
@@ -81,15 +82,31 @@ function attack(){
             'team_1' : team1[i].getAttribute('team'),
             'team_2' : team2[i].getAttribute('team')
         },function(res){
+            var log=[];
+            log['match_id']=$('#'+res.attacker).parents('table').attr('id')
+            log['attacker_id']=res.attack_player.id;
+            log['defender_id']=res.defence_player.id;
+            log['type']=res.type;
+            log['status']=res.score;
+            log['time']=time;
+
+            saveLogs(log)
 
             if(res.score==='scored'){
                 var point;
+
+                var score;
+
+
+
                 if(res.type===1){
-                    score_point=1
+                    score_point=2
                 }else{
                     score_point=res.type
                 }
-                var score
+
+
+
                 if(time<=12){
                     score =$('#'+res.attacker).children('.first_period').html();
                     if(score==='-'){
@@ -146,3 +163,18 @@ $('tr').click(function(){
         window.location.href='team_detail/'+short
     }
 })
+
+function saveLogs(log){
+    var obj={
+        '_token': $('input[name="_token"]').val(),
+        'match_id':log['match_id'],
+        'attacker_id':log['attacker_id'],
+        'defender_id':log['defender_id'],
+        'type' : log['type'],
+        'status':log['status'],
+        'time':log['time']
+    }
+    $.post('/saveLog',obj,function(res){
+        console.log(res)
+    });
+}

@@ -18,8 +18,10 @@ class CreateLogsTable extends Migration
             $table->integer('match_id')->unsigned();
             $table->integer('attacker_id')->unsigned();
             $table->integer('defender_id')->unsigned();
-            $table->integer('status');
+            $table->string('status');
+            $table->integer('type');
             $table->string('message');
+            $table->integer('time');
         });
         Schema::table('logs', function(Blueprint $table) {
             $table->foreign('attacker_id')->references('id')->on('players');
