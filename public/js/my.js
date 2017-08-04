@@ -83,46 +83,52 @@ function attack(){
         },function(res){
 
             if(res.score==='scored'){
+                var point;
+                if(res.type===1){
+                    score_point=1
+                }else{
+                    score_point=res.type
+                }
                 var score
                 if(time<=12){
                     score =$('#'+res.attacker).children('.first_period').html();
                     if(score==='-'){
-                        $('#'+res.attacker).children('.first_period').html('3')
+                        $('#'+res.attacker).children('.first_period').html(score_point)
                     }
                     else{
                         var point=$('#'+res.attacker).children('.first_period').html()
                         point=parseInt(point)
-                        $('#'+res.attacker).children('.first_period').html(point+3)
+                        $('#'+res.attacker).children('.first_period').html(point + score_point)
                     }
                 }
                 else if(time<=24 && time>12){
                     score =$('#'+res.attacker).children('.second_period').html();
                     if(score==='-'){
-                        $('#'+res.attacker).children('.second_period').html('3')
+                        $('#'+res.attacker).children('.second_period').html(score_point)
                     }else{
                         var point=$('#'+res.attacker).children('.second_period').html()
                         point=parseInt(point)
-                        $('#'+res.attacker).children('.second_period').html(point+3)
+                        $('#'+res.attacker).children('.second_period').html(point + score_point)
                     }
                 }
                 else if(time<=36 && time>24){
                     score =$('#'+res.attacker).children('.third_period').html();
                     if(score==='-'){
-                        $('#'+res.attacker).children('.third_period').html('3')
+                        $('#'+res.attacker).children('.third_period').html(score_point)
                     }else{
                         var point=$('#'+res.attacker).children('.third_period').html()
                         point=parseInt(point)
-                        $('#'+res.attacker).children('.third_period').html(point+3)
+                        $('#'+res.attacker).children('.third_period').html(point + score_point)
                     }
                 }
                 else if(time<=48 && time>36){
                     score =$('#'+res.attacker).children('.forth_period').html();
                     if(score==='-'){
-                        $('#'+res.attacker).children('.forth_period').html('3')
+                        $('#'+res.attacker).children('.forth_period').html(score_point)
                     }else{
                         var point=$('#'+res.attacker).children('.forth_period').html()
                         point=parseInt(point)
-                        $('#'+res.attacker).children('.forth_period').html(point+3)
+                        $('#'+res.attacker).children('.forth_period').html(point + score_point)
                     }
                 }
             }
