@@ -30,21 +30,22 @@ class HomeController extends Controller
     {
         $teams=Team::inRandomOrder()->limit(8)->get();
         $match=Match::count()+1;
+        $this->setMatches($teams);
 
         return view('home')->with('teams',$teams)->with('match',$match);
     }
 
-    public function setMatches(Request $req){
+    public function setMatches($teams){
         $count=Match::get()->count();
         $session= floor($count/4)+1;
-
-
-        $match=new Match();
-        $match->first_team = $req->first_team;
-        $match->second_team = $req->second_team;
-        $match->session=$session;
-        if($match->save()){
-            return 1;
+        for ($i=0;$i<count($teams);$i+=2){
+            $match=new Match();
+            $match->first_team = $teams[$i]->id;
+            $match->second_team = $teams[$i+1]->id;
+            $match->session=$session;
+            if($match->save()){
+                return 1;
+            }
         }
     }
 
@@ -53,15 +54,6 @@ class HomeController extends Controller
 
         $team1=Team::find($req->team_1);
         $team2=Team::find($req->team_2);
-
-
-
-        ## Random Players
-        $team1_players=$team1->getPlayerIds();
-        $team2_players=$team2->getPlayerIds();
-        $team1_player=Player::find(array_random($team1_players->toArray()));
-        $team2_player=Player::find(array_random($team2_players->toArray()));
-        ##
 
 
         ## Team Score Possibility by Overall Points
@@ -209,7 +201,7 @@ class HomeController extends Controller
     }
 
     public function getLog(Request $req){
-        $log = Log::find($req->log_id);
+        $log = Log::where('match_id',$req->match_id)->get();
         return $log;
     }
 

@@ -8,7 +8,21 @@ var time=0;
 
 
 $(document).ready(function(){
-    prepareMatches()
+    $('.match_details').click(function(e){
+        e.preventDefault()
+        var match=$(this).attr('href')
+        $('.myBox').addClass('hidden');
+
+        $('.hid'+match).removeClass('hidden')
+
+    })
+    $('.back').click(function(e){
+        e.preventDefault()
+        $('.myBoxes').addClass('hidden');
+        $('.myBox').removeClass('hidden');
+    })
+
+    //prepareMatches()
     var total_time=48;
     $('#startBtn').click(function(e){
         e.preventDefault()
@@ -110,45 +124,41 @@ function attack(){
 
 
                 if(time<=12){
-                    score =$('#'+res.attacker).children('.first_period').html();
-                    if(score==='-'){
-                        $('#'+res.attacker).children('.first_period').html(score_point)
-                    }
-                    else{
-                        var point=$('#'+res.attacker).children('.first_period').html()
-                        point=parseInt(point)
-                        $('#'+res.attacker).children('.first_period').html(point + score_point)
-                    }
+                    var point=$('#'+res.attacker).children('.first_period').html()
+                    var player_point=$('#player_'+res.attack_player.id).siblings('.first_period').html()
+                    player_point=parseInt(player_point)
+                    point=parseInt(point)
+                    $('#'+res.attacker).children('.first_period').html(point + score_point)
+                    $('#player_'+res.attack_player.id).siblings('.first_period').html(player_point+score_point)
+
                 }
                 else if(time<=24 && time>12){
-                    score =$('#'+res.attacker).children('.second_period').html();
-                    if(score==='-'){
-                        $('#'+res.attacker).children('.second_period').html(score_point)
-                    }else{
-                        var point=$('#'+res.attacker).children('.second_period').html()
-                        point=parseInt(point)
-                        $('#'+res.attacker).children('.second_period').html(point + score_point)
-                    }
+                    var point=$('#'+res.attacker).children('.second_period').html()
+                    var player_point=$('#player_'+res.attack_player.id).siblings('.second_period').html()
+                    player_point=parseInt(player_point)
+                    point=parseInt(point)
+                    $('#'+res.attacker).children('.second_period').html(point + score_point)
+                    $('#player_'+res.attack_player.id).siblings('.second_period').html(player_point+score_point)
+
                 }
                 else if(time<=36 && time>24){
-                    score =$('#'+res.attacker).children('.third_period').html();
-                    if(score==='-'){
-                        $('#'+res.attacker).children('.third_period').html(score_point)
-                    }else{
-                        var point=$('#'+res.attacker).children('.third_period').html()
-                        point=parseInt(point)
+                    var point=$('#'+res.attacker).children('.third_period').html()
+                    var player_point=$('#player_'+res.attack_player.id).siblings('.third_period').html()
+                    player_point=parseInt(player_point)
+                    point=parseInt(point)
+
                         $('#'+res.attacker).children('.third_period').html(point + score_point)
-                    }
+                        $('#player_'+res.attack_player.id).siblings('.third_period').html(player_point+score_point)
+
                 }
                 else if(time<=48 && time>36){
-                    score =$('#'+res.attacker).children('.forth_period').html();
-                    if(score==='-'){
-                        $('#'+res.attacker).children('.forth_period').html(score_point)
-                    }else{
-                        var point=$('#'+res.attacker).children('.forth_period').html()
-                        point=parseInt(point)
-                        $('#'+res.attacker).children('.forth_period').html(point + score_point)
-                    }
+                    var point=$('#'+res.attacker).children('.forth_period').html()
+                    var player_point=$('#player_'+res.attack_player.id).siblings('.forth_period').html()
+                    player_point=parseInt(player_point)
+                    point=parseInt(point)
+                    $('#'+res.attacker).children('.forth_period').html(point + score_point)
+                    $('#player_'+res.attack_player.id).siblings('.fourth_period').html(player_point+score_point)
+
                 }
             }
             else{

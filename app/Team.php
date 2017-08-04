@@ -22,6 +22,7 @@ class Team extends Model
     }
 
 
+
     public function Score(Team $team,$type){
         $score=array();
 
