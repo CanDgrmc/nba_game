@@ -10,6 +10,9 @@ class Player extends Model
     public function Team(){
         return $this->belongsTo('App\\Team');
     }
+    public function getTeamId(){
+        return $this->Team()->pluck('id')->first();
+    }
     public function Skills(){
         return $this->hasOne('App\\Skill');
     }

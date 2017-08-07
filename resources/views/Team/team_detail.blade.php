@@ -31,20 +31,36 @@
                 <thead>
                 <tr>
                     <th></th>
-                    <th>1</th>
-                    <th>2</th>
-                    <th>3</th>
-                    <th>4</th>
+                    <th>Result</th>
+
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
+
+                    @foreach($matches as $match)
+                        <tr>
+                            <td style="font-size: 20px;text-shadow: 0 0 2px white" align="center">{{App\Team::find($match->first_team)->team_shortName}} - {{App\Team::find($match->second_team)->team_shortName}}</td>
+                             @php
+                                 $team1_points=[];
+                                 $team2_points=[];
+                                    foreach ($match_stats as $ms){
+                                    if($ms->match_id === $match->id){
+                                            array_push($team1_points,$ms->team1_point);
+                                            array_push($team2_points,$ms->team2_point);
+                                        }
+                                    }
+                             @endphp
+                            <td>@foreach($match_stats as $ms)
+                                    @if($ms->match_id === $match->id && $ms->quarter_number===4)
+                                       {{$ms->team1_point}} -
+                                       {{$ms->team2_point}}
+                                    @endif
+                                @endforeach
+                            </td>
+
+                        </tr>
+                    @endforeach
+
                 </tbody>
             </table>
         </div>

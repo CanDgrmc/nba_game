@@ -13,6 +13,15 @@ class Team extends Model
     public function Players(){
         return $this->hasMany('App\\Player');
     }
+    public function Logs(){
+        return $this->hasMany('App\\Log');
+    }
+    public function Match_stats(){
+        return $this->hasMany('App\\Match_stat');
+    }
+    public function getMatchStats(){
+        return $this->Match_stats();
+    }
 
     public function getPlayerIds(){
         return $this->Players()->pluck('id');
@@ -26,7 +35,9 @@ class Team extends Model
     public function Score(Team $team,$type){
         $score=array();
 
+
         $team1_player=Player::find(array_random($this->getPlayerIds()->toArray()));
+        $assist=Player::find(array_random($this->getPlayerIds()->toArray()));
         $team2_player=Player::find(array_random($team->getPlayerIds()->toArray()));
         switch ($type){
             case 1:
@@ -53,6 +64,11 @@ class Team extends Model
         }
         for ($i=0;$i<$fail;$i++){
             array_push($score,0);
+        }
+        if($assist->id !== $team1_player->id){
+            $result['assist_from']=$assist;
+        }else{
+            $result['assist_from']=0;
         }
         $result['result'] = array_random($score);
         $result['attacker']=$team1_player;

@@ -29,8 +29,8 @@ class HomeController extends Controller
     public function index()
     {
         $teams=Team::inRandomOrder()->limit(8)->get();
-        $match=Match::count()+1;
-        $this->setMatches($teams);
+
+        $match=$this->setMatches($teams);
 
         return view('home')->with('teams',$teams)->with('match',$match);
     }
@@ -38,16 +38,19 @@ class HomeController extends Controller
     public function setMatches($teams){
         $count=Match::get()->count();
         $session= floor($count/4)+1;
+        $matches=[];
         for ($i=0;$i<count($teams);$i+=2){
             $match=new Match();
             $match->first_team = $teams[$i]->id;
             $match->second_team = $teams[$i+1]->id;
             $match->session=$session;
             if($match->save()){
-                return 1;
+               array_push($matches,$match->id);
             }
         }
+        return $matches;
     }
+
 
     public function attack(Request $req){
         $attack_turn=array();
@@ -56,7 +59,7 @@ class HomeController extends Controller
         $team2=Team::find($req->team_2);
 
 
-        ## Team Score Possibility by Overall Points
+        ## Team Attack Turn Possibility by Overall Points
         $team1_attack=$team1->team_attack_overall;
         $team2_attack=$team2->team_attack_overall;
 
@@ -106,11 +109,22 @@ class HomeController extends Controller
                     'type' => $type
 
                 ];
-                if($scored){
+                if($scored['result']){
                     $result['score'] = 'scored';
 
                 }else{
                     $result['score'] = 'failed';
+                }
+                if($scored['assist_from']!==0){
+                    $result['assist_from'] = [
+                        'id' => $scored['assist_from']->id,
+                        'name' => $scored['assist_from']->name_surname,
+                    ];
+                }else{
+                    $result['assist_from'] = [
+                        'id' =>$scored['attacker']->id,
+                        'name' =>$scored['attacker']->name_surname,
+                    ];
                 }
 
                 return $result;
@@ -141,23 +155,22 @@ class HomeController extends Controller
                     $result['score'] = 'failed';
                 }
 
+                if($scored['assist_from']!==0){
+                    $result['assist_from'] = [
+                        'id' => $scored['assist_from']->id,
+                        'name' => $scored['assist_from']->name_surname,
+                    ];
+                }else{
+                    $result['assist_from'] = [
+                        'id' =>$scored['attacker']->id,
+                        'name' =>$scored['attacker']->name_surname,
+                    ];
+                }
+
                 return $result;
 
                 break;
         }
-    }
-
-    public function match_result(Request $req){
-
-        $match=new Match_stat();
-        $match->id=$req->match_id;
-        $match->quarter=$req->quarter;
-        $match->team1_point=$req->team1_point;
-        $match->team2_point=$req->team2_point;
-        $match->team1_attack=$req->team1_attack;
-        $match->team2_attack=$req->team2_attack;
-        $match->save();
-
     }
 
     public function player_stats(Request $req){
@@ -170,39 +183,101 @@ class HomeController extends Controller
     public function saveLog(Request $req){
         $attacker=Player::find($req->attacker_id);
         $defender=Player::find($req->defender_id);
-        if($req->type===1){
-            $type='Dunk';
-        }else if($req->type===2){
-            $type='2 Points';
+        $match=Match::find($req->match_id);
+        if($req->type==='1' || $req->type==='2'){
+            $type=2;
         }else{
-            $type='3 Points';
+            $type=3;
         }
         switch ($req->status){
             case 'scored':
-                $message= $attacker->name_surname.' has scored '.$type;
+                $message= $attacker->name_surname.' has scored '.$type.' points';
                 break;
             case 'failed':
                 $message= $attacker->name_surname.' was blocked by '.$defender->name_surname;
                 break;
         }
         $log=new Log();
-        $log->match_id = $req->match_id;
+        $log->match_id = $match->id;
+        $log->attacker_team=$attacker->getTeamId();
+        $log->defender_team=$defender->getTeamId();
         $log->attacker_id = $req->attacker_id;
+        $log->assist_id = $req->assist_id;
         $log->defender_id = $req->defender_id;
         $log->status=$req->status;
-        $log->type=$req->type;
+        $log->type=$type;
         $log->message=$message;
         $log->time=$req->time;
 
-        if($log->save()){
-            return 1;
-        }
+       $log->save();
+
 
     }
+    public function match_stats(Request $req){
+        $match=Match::find($req->match_id);
+        $stat =new Match_stat();
+        $stat->match_id=$match->id;
+        switch ($req->time){
+
+            case 13:
+                $quarter=1;
+
+                $by_quarter_team1=Log::where('match_id',$match->id)->where('time','<=',12)->where('attacker_team',$match->first_team)->where('status','scored')->sum('type');
+                $by_quarter_team2=Log::where('match_id',$match->id)->where('time','<=',12)->where('attacker_team',$match->second_team)->where('status','scored')->sum('type');
+
+                break;
+            case 25:
+                $quarter=2;
+
+                $by_quarter_team1=Log::where('match_id',$match->id)->where('time','<=',24)->where('attacker_team',$match->first_team)->where('status','scored')->sum('type');
+                $by_quarter_team2=Log::where('match_id',$match->id)->where('time','<=',24)->where('attacker_team',$match->second_team)->where('status','scored')->sum('type');
+
+                break;
+            case 37:
+                $quarter=3;
+
+                $by_quarter_team1=Log::where('match_id',$match->id)->where('time','<=',36)->where('attacker_team',$match->first_team)->where('status','scored')->sum('type');
+                $by_quarter_team2=Log::where('match_id',$match->id)->where('time','<=',36)->where('attacker_team',$match->second_team)->where('status','scored')->sum('type');
+
+                break;
+            case 49:
+                $quarter=4;
+
+                $by_quarter_team1=Log::where('match_id',$match->id)->where('time','<=',48)->where('attacker_team',$match->first_team)->where('status','scored')->sum('type');
+                $by_quarter_team2=Log::where('match_id',$match->id)->where('time','<=',48)->where('attacker_team',$match->second_team)->where('status','scored')->sum('type');
+
+                break;
+        }
+        $return=[
+            'quarter' => $quarter,
+            'team1_id' => $match->first_team,
+            'team2_id' => $match->second_team,
+            'team1_point' => $by_quarter_team1,
+            'team2_point' => $by_quarter_team2
+        ];
+
+
+        $stat->quarter_number=$quarter;
+        $stat->team1=$match->first_team;
+        $stat->team2=$match->second_team;
+        $stat->team1_point=$by_quarter_team1;
+        $stat->team2_point=$by_quarter_team2;
+        if($stat->save()){
+            return $return;
+        }
+
+
+
+
+
+    }
+
+
 
     public function getLog(Request $req){
         $log = Log::where('match_id',$req->match_id)->get();
         return $log;
     }
+
 
 }
