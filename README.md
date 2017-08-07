@@ -1,6 +1,5 @@
 # README #
 
-'composer install' 
 
 db name =  nba
 
