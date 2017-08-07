@@ -90,15 +90,16 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    <div style="text-shadow: 1px 1px 2px black;font-weight: 700;box-shadow: 0 10px 10px black;padding:140px;">
+                    <div style="text-shadow: 1px 1px 2px black;font-weight: 700;box-shadow: 0 10px 10px black;padding:140px;-webkit-text-stroke: 1px #878787 ">
                         <span style="color:#4b4bdb">La</span><span style="color:white">ra</span><span style="color:#ae2828">vel</span>
                         <br>
-                        <small style="font-size:16px;text-shadow: 0 2px 5px black;color : #d78686">With Desire of Laracon</small>
+
 
                     </div>
 
 
                 </div>
+                <small style="font-size:16px;text-shadow: 0 2px 5px black;-webkit-text-stroke: 1px #959595 ;color : #d78686">With Desire of Laracon</small>
 
 
             </div>
