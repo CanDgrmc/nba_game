@@ -90,7 +90,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    <div style="text-shadow: 1px 1px 2px black;font-weight: 700;box-shadow: 0 10px 10px black;padding:140px;-webkit-text-stroke: 1px #878787 ">
+                    <div style="text-shadow: 1px 1px 2px black;font-weight: 700;box-shadow: 0 10px 10px black;padding:120px;-webkit-text-stroke: 1px #878787 ">
                         <span style="color:#4b4bdb">La</span><span style="color:white">ra</span><span style="color:#ae2828">vel</span>
                         <br>
 

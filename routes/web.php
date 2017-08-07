@@ -23,4 +23,4 @@ Route::get('/team_detail/{short}','TeamController@detail');
 Route::post('/attack','HomeController@attack');
 Route::post('/match_stat','HomeController@match_stats');
 Route::post('/saveLog','HomeController@saveLog');
-Route::post('/player_stat','HomeController@player_stats');
+Route::post('/getPlayerStat','HomeController@getLogs');

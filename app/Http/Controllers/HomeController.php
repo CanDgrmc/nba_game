@@ -173,15 +173,7 @@ class HomeController extends Controller
         }
     }
 
-    public function player_stats(Request $req){
-        $stats=new player_stat();
-        $stats->match_id=$req->match_id;
-        $stats->player_id=$req->player_id;
-        $stats->points=$req->points;
-        $stats->two_points_success=$req->two_points_success;
-        $stats->three_points_success=$req->three_points_success;
-        $stats->save();
-    }
+
 
 
     public function saveLog(Request $req){
@@ -278,8 +270,9 @@ class HomeController extends Controller
 
 
 
-    public function getLog(Request $req){
-        $log = Log::where('match_id',$req->match_id)->get();
+    public function getLogs(Request $req){
+        $log['attack_logs'] = Log::where('match_id',$req->match_id)->where('attacker_id',$req->player_id)->orderBy('time')->get();
+        $log['defence_logs'] = Log::where('match_id',$req->match_id)->where('defender_id',$req->player_id)->where('status','failed')->orderBy('time')->get();
         return $log;
     }
 

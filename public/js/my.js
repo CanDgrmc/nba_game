@@ -210,7 +210,7 @@ function attack(){
     }
 }
 
-$('tr').click(function(){
+$('.team_link').click(function(){
     if(clickControl===0){
         var short=$(this).attr('data')
         window.location.href='team_detail/'+short
@@ -327,3 +327,27 @@ function postPlayerStats(){
 
     })
 }
+
+$('.players').on('click',function(){
+
+    var player_id=$(this).children('td').first().attr('id').split('_');
+    player_id=player_id[1];
+    var match_id=$(this).parents('table').attr('data')
+    $.post('/getPlayerStat',{
+        '_token' : $('input[name="_token"]').val(),
+        'player_id' : player_id,
+        'match_id' : match_id
+    },function(res){
+        $('#player_logs').html('')
+        $('#myModal').modal('show')
+        var attack=res['attack_logs']
+        var defence=res['defence_logs']
+        for (var i=0 ; i<attack.length; i++){
+            $('#player_logs').append('<tr><td></td> <td>'+ attack[i].message+'</td><td>'+attack[i].time+'. min</td></tr>')
+        }
+
+
+
+    })
+
+})

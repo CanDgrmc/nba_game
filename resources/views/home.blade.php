@@ -31,12 +31,12 @@
                                 <th>2</th>
                                 <th>3</th>
                                 <th>4</th>
-                                <th>Total</th>
+
                             </tr>
                             </thead>
                             <tbody>
 
-                            <tr class="team_1" team="{{$teams[$i]->id}}" data="{{$teams[$i]->team_shortName}}" id="team_{{$teams[$i]->id}}">
+                            <tr class="team_1 team_link" team="{{$teams[$i]->id}}" data="{{$teams[$i]->team_shortName}}" id="team_{{$teams[$i]->id}}">
                                 <td>
                                     <img src="{{asset($teams[$i]->team_img)}}" height="70" width="90">
                                     <strong class="team_name">{{$teams[$i]->team_shortName}}</strong>
@@ -45,10 +45,10 @@
                                 <td class="second_period_main">0</td>
                                 <td class="third_period_main">0</td>
                                 <td class="forth_period_main">0</td>
-                                <td class="total">0</td>
+                                <td class="total" style="font-size: 28px">0</td>
 
                             </tr>
-                            <tr class="team_2" team="{{$teams[$i+1]->id}}" data="{{$teams[$i+1]->team_shortName}}" id="team_{{$teams[$i+1]->id}}">
+                            <tr class="team_2 team_link" team="{{$teams[$i+1]->id}}" data="{{$teams[$i+1]->team_shortName}}" id="team_{{$teams[$i+1]->id}}">
                                 <td><img src="{{asset($teams[$i+1]->team_img)}}" height="70" width="90">
                                     <strong class="team_name">{{$teams[$i+1]->team_shortName}}</strong>
                                 </td>
@@ -56,7 +56,7 @@
                                 <td class="second_period_main">0</td>
                                 <td class="third_period_main">0</td>
                                 <td class="forth_period_main">0</td>
-                                <td class="total">0</td>
+                                <td class="total" style="font-size: 28px">0</td>
 
                             </tr>
 
@@ -105,7 +105,7 @@
                             </tbody>
                         </table>
                         <h4><img src="{{asset($teams[$i+1]->team_img)}}" height="70" width="90">{{$teams[$i+1]->team_shortName}} <span id="score_{{$teams[$i+1]->id}}"></span></h4>
-                        <table class="table table-responsive">
+                        <table class="table table-responsive secondary" data="{{$match[$matchCount]}}">
                             <thead>
                             <tr>
                                 <th></th>
@@ -122,7 +122,7 @@
                             <tbody>
 
                             @foreach($teams[$i+1]->getPlayerIds() as $player)
-                                <tr>
+                                <tr class="players">
                                     <td id="player_{{$player}}">{{App\Player::find($player)->name_surname}}</td>
                                     <td class="first_period">0</td>
                                     <td class="second_period">0</td>
@@ -136,6 +136,8 @@
                             @endforeach
                             </tbody>
                         </table>
+
+
 
 
                         <center>
@@ -152,6 +154,36 @@
                     @endif
 
     @endfor
+        </div>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content" style="background-color: #c0c0c033;color:white">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-responsive">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Logs</th>
+                                <th>Time</th>
+
+
+                            </tr>
+                            </thead>
+                            <tbody id="player_logs">
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
 
 
