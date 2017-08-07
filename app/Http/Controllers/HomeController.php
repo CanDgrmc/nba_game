@@ -271,8 +271,8 @@ class HomeController extends Controller
 
 
     public function getLogs(Request $req){
-        $log['attack_logs'] = Log::where('match_id',$req->match_id)->where('attacker_id',$req->player_id)->orderBy('time')->get();
-        $log['defence_logs'] = Log::where('match_id',$req->match_id)->where('defender_id',$req->player_id)->where('status','failed')->orderBy('time')->get();
+        $log['attack_logs'] = Log::where('match_id',$req->match_id)->where('attacker_id',$req->player_id)->orderBy('time','desc')->limit(5)->get();
+        $log['defence_logs'] = Log::where('match_id',$req->match_id)->where('defender_id',$req->player_id)->where('status','failed')->orderBy('time','desc')->limit(5)->get();
         return $log;
     }
 

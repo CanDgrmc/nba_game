@@ -338,12 +338,16 @@ $('.players').on('click',function(){
         'player_id' : player_id,
         'match_id' : match_id
     },function(res){
-        $('#player_logs').html('')
+        $('#player_attack_logs').html('')
+        $('#player_defence_logs').html('')
         $('#myModal').modal('show')
         var attack=res['attack_logs']
         var defence=res['defence_logs']
         for (var i=0 ; i<attack.length; i++){
-            $('#player_logs').append('<tr><td></td> <td>'+ attack[i].message+'</td><td>'+attack[i].time+'. min</td></tr>')
+            $('#player_attack_logs').append('<tr><td></td> <td>'+ attack[i].message+'</td><td>'+attack[i].time+'. min</td></tr>')
+        }
+        for (var i=0 ; i<defence.length; i++){
+            $('#player_defence_logs').append('<tr><td></td> <td>'+ defence[i].message+'</td><td>'+defence[i].time+'. min</td></tr>')
         }
 
 

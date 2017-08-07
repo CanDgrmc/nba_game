@@ -164,18 +164,32 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Modal Header</h4>
                     </div>
-                    <div class="modal-body">
-                        <table class="table table-responsive">
+                    <div class="modal-body container-fluid">
+                        <table class="table table-responsive col-md-5">
                             <thead>
                             <tr>
                                 <th></th>
-                                <th>Logs</th>
+                                <th>Attack</th>
                                 <th>Time</th>
 
 
                             </tr>
                             </thead>
-                            <tbody id="player_logs">
+                            <tbody id="player_attack_logs">
+
+                            </tbody>
+                        </table>
+                        <table class="table table-responsive col-md-5">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Defence</th>
+                                <th>Time</th>
+
+
+                            </tr>
+                            </thead>
+                            <tbody id="player_defence_logs">
 
                             </tbody>
                         </table>
