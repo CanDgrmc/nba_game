@@ -1,8 +1,13 @@
 /**
  * Created by Asus on 2.08.2017.
  */
+$(window).bind('beforeunload',function(){
 
+    //save info somewhere
 
+    return 'are you sure you want to leave?';
+
+});
 var clickControl=0;
 var time=0;
 
