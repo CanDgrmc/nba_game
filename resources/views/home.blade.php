@@ -7,8 +7,8 @@
 
 @section('content')
     <div class="row">
-        <center><h3 style="color:#fff; margin-top:-55px"><span id="minute">0</span> Minute</h3></center>
-        <center><a href="#" style="color:black;font-size: 22px;font-weight: bold" id="startBtn">Start</a></center>
+        <center><h3 style="color:#fff; margin-top:-35px" class="hidden counter"><span id="minute">0</span> Minute</h3></center>
+        <center><a href="#"  id="startBtn">Start</a></center>
     </div>
 <div class="container-fluid">
     {{csrf_field()}}
@@ -73,7 +73,7 @@
 
                     <div class="col-md-11 myBoxes hidden hid{{$match[$matchCount]}}">
                         <h4><img src="{{asset($teams[$i]->team_img)}}" height="70" width="90">{{$teams[$i]->team_shortName}} <span id="score_{{$teams[$i]->id}}"></span> </h4>
-                        <table class="table table-responsive">
+                        <table class="table table-responsive secondary" data="{{$match[$matchCount]}}">
                             <thead>
                             <tr>
                                 <th></th>
@@ -90,7 +90,7 @@
                             <tbody>
 
                             @foreach($teams[$i]->getPlayerIds() as $player)
-                                <tr>
+                                <tr class="players">
                                     <td id="player_{{$player}}">{{App\Player::find($player)->name_surname}}</td>
                                     <td class="first_period">0</td>
                                     <td class="second_period">0</td>

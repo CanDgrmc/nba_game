@@ -26,12 +26,15 @@ $(document).ready(function(){
     var total_time=48;
     $('#startBtn').click(function(e){
         e.preventDefault()
+        $(this).fadeOut()
+        $('.counter').removeClass('hidden')
         if(clickControl===0){
             clickControl++;
 
                 var timer=setInterval(function(){
                     time++
                     if(time<=total_time){
+
 
                         $('#minute').text(time)
                         // 12 =  Min Time  24=Max Time
@@ -42,6 +45,7 @@ $(document).ready(function(){
                     else if(time===49){
                         clickControl=0
                         postMatchStats()
+                        postPlayerStats()
 
                         clearInterval(timer)
                     }
@@ -185,7 +189,7 @@ function attack(){
                     $('#team_'+res.attacker).children('.forth_period_main').html(point + score_point)
                     $('#player_'+res.attack_player.id).siblings('.fourth_period').html(player_point+score_point)
                     $('#team_'+res.attacker).children('.total').html(total + score_point)
-                    if(res.assis_from.id !== res.attack_player.id){
+                    if(res.assist_from.id !== res.attack_player.id){
                         $('#player_'+res.assist_from.id).siblings('.assist').html(player_assist+1)
                     }
 
@@ -290,4 +294,36 @@ function postMatchStats(){
     }
 
 
+}
+
+
+function postPlayerStats(){
+    var table=$('.secondary')
+    var players=$('.players')
+    players.each(function(index){
+        var player_id=$(this).children('td').first().attr('id').split('_');
+        player_id=player_id[1];
+
+        var first_period=$('#player_'+player_id).siblings('.first_period').html()
+        var second_period=$('#player_'+player_id).siblings('.second_period').html()
+        var third_period=$('#player_'+player_id).siblings('.third_period').html()
+        var forth_period=$('#player_'+player_id).siblings('.forth_period').html()
+        var total_points=parseInt(first_period) + parseInt(second_period)+ parseInt(third_period)+parseInt(forth_period)
+        var three_point_success=$('#player_'+player_id).siblings('.threepoints').html()
+        three_point_success=three_point_success.replace('%','')
+        three_point_success=parseInt(three_point_success)
+        var two_point_success=$('#player_'+player_id).siblings('.twopoints').html()
+        two_point_success=two_point_success.replace('%','')
+        two_point_success=parseInt(two_point_success)
+        var match_id=$(this).parents('table').attr('data')
+        $.post('/player_stat',{
+            '_token' : $('input[name="_token"]').val(),
+            'match_id' : match_id,
+            'player_id' : player_id,
+            'points' : total_points,
+            'two_points_success' : two_point_success,
+            'three_points_success' : three_point_success
+        })
+
+    })
 }

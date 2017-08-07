@@ -177,6 +177,10 @@ class HomeController extends Controller
         $stats=new player_stat();
         $stats->match_id=$req->match_id;
         $stats->player_id=$req->player_id;
+        $stats->points=$req->points;
+        $stats->two_points_success=$req->two_points_success;
+        $stats->three_points_success=$req->three_points_success;
+        $stats->save();
     }
 
 

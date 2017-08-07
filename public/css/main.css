@@ -108,3 +108,14 @@ h4 {
     font-weight: bold;
     text-shadow: 0 0 3px black;
 }
+#startBtn {
+    color:black;
+    font-size: 22px;
+    font-weight: bold;
+    padding:10px;
+    border:1px solid silver;
+}
+#startBtn:hover {
+    text-decoration: none;
+    border:1px solid #fff;
+}

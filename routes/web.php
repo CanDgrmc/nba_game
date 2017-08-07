@@ -24,4 +24,4 @@ Route::post('/setMatches','HomeController@setMatches');
 Route::post('/attack','HomeController@attack');
 Route::post('/match_stat','HomeController@match_stats');
 Route::post('/saveLog','HomeController@saveLog');
-Route::post('/getLog','HomeController@getLog');
+Route::post('/player_stat','HomeController@player_stats');

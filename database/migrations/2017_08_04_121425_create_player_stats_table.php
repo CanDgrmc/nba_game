@@ -18,10 +18,8 @@ class CreatePlayerStatsTable extends Migration
             $table->integer('match_id')->unsigned()->nullable();
             $table->integer('player_id')->unsigned()->nullable();
             $table->integer('points');
-            $table->integer('two_points_total');
-            $table->integer('two_points_successful');
-            $table->integer('three_points_total');
-            $table->integer('three_points_successful');
+            $table->integer('two_points_success');
+            $table->integer('three_points_success');
         });
         Schema::table('player_stats', function(Blueprint $table) {
             $table->foreign('match_id')->references('id')->on('matches');
